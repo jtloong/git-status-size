@@ -37,7 +37,6 @@ function get_size (){
   fi
 }
 
-echo "----"
 mapfile -t git_status_files < <( git status -s )
 
 tLen=${#git_status_files[@]}
@@ -46,4 +45,3 @@ for (( i=0; i<${tLen}; i++ ));
 do
   get_size ${git_status_files[$i]}
 done
-echo "----"
