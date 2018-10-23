@@ -2,6 +2,8 @@
 
 This is a small custom git command that allows you to see the sizes of all of the untracked, modified, and added files in a repo. Once installed you can call `git status-size` to get a list of file sizes in your terminal.
 
+<p align="center"><img src="/img/example.gif?raw=true"/></p>
+
 ## Installation
 
 1. `git clone https://github.com/jtloong/git-status-size`
