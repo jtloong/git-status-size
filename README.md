@@ -14,8 +14,6 @@ Now it should work! Go to any repo and in the command line call `git status-size
 ----
 Added: edited_file.jpg - 7.28 mb
 Added: new_file.jpg - 7.28 mb
-Modified: sequence-alignment/.ipynb_checkpoints/Untitled-checkpoint.ipynb - 0 mb
-Modified: sequence-alignment/.ipynb_checkpoints/experiment_2-checkpoint.ipynb - 0 mb
 Modified: sequence-alignment/Untitled.ipynb - 0 mb
 Modified: sequence-alignment/experiment_2.ipynb - 0 mb
 Modified: sg2im - 0 mb
