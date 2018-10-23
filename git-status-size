@@ -11,18 +11,17 @@ function round()
 };
 
 function get_size (){
+  #Find file size
   var=$(stat -c%s "$2")
   mb=$(bc <<< 'scale=2; '$var'/1000000')
 
   #Colors
-
   RED=`tput setaf 1`
   GREEN=`tput setaf 2`
+  YELLOW=`tput setaf 3`
   NC=`tput sgr0`
-  # RED='\033[0;31m'
-  # GREEN='\033[0;32m'
-  # NC='\033[0m'
 
+  #Display file depending on git status
   if [[ $1 == "M" ]]
   then
     echo "${RED}Modified${NC}: $2 - $mb mb"
@@ -30,6 +29,22 @@ function get_size (){
   if [[ $1 == "A" ]]
   then
     echo "${GREEN}Added${NC}: $2 - $mb mb"
+  fi
+  if [[ $1 == "U" ]]
+  then
+    echo "${GREEN}Updated${NC}: $2 - $mb mb"
+  fi
+  if [[ $1 == "D" ]]
+  then
+    echo "${RED}Deleted${NC}: $2 - $mb mb"
+  fi
+  if [[ $1 == "C" ]]
+  then
+    echo "${YELLOW}Copied${NC}: $2 - $mb mb"
+  fi
+  if [[ $1 == "R" ]]
+  then
+    echo "${RED}Renamed${NC}: $2 - $mb mb"
   fi
   if [[ $1 == "??" ]]
   then

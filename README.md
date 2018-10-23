@@ -7,7 +7,7 @@ This is a small custom git command that allows you to see the sizes of all of th
 1. `git clone https://github.com/jtloong/git-status-size`
 2. `cd git-status-size`
 3. You'll have to move the script into your git PATH. For my machine this would be `sudo cp git-status-size /usr/bin/`.
-4. Make it into an executable with `chmod +x git-status-size`
+4. Make it into an executable with `sudo chmod +x git-status-size`
 
 NOTE: If you don't know your git PATH you can check with `type git`.
 
