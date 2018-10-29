@@ -33,11 +33,6 @@ function get_size (){
   esac
 }
 
-mapfile -t git_status_files < <( git status -s )
-
-tLen=${#git_status_files[@]}
-
-for (( i=0; i<${tLen}; i++ ));
-do
-  get_size ${git_status_files[$i]}
-done
+while read status_file; do
+  get_size $status_file
+done < <( git status --porcelain )
