@@ -10,7 +10,8 @@ function round()
   echo $(printf %.$2f $(echo "scale=$2;(((10^$2)*$1)+0.5)/(10^$2)" | bc))
 };
 
-function get_size (){
+
+function print_output (){
   #Find file size
   var=$(stat -c%s "$2")
   mb=$(bc <<< 'scale=2; '$var'/1000000')
@@ -31,8 +32,48 @@ function get_size (){
     R*)   echo "${RED}Renamed${NC}: $2 - $mb mb" ;;
     '??') echo "${RED}Untracked${NC}: $2 - $mb mb" ;;
   esac
+
+  test=$(bc <<< 'scale=0; '$var'/1000000')
+  echo $test
+  if (($test > 100))
+  then
+    return 1
+  else
+    return 0
+  fi
 }
 
+function add_files()
+{
+  while read status; do
+    file=$(cut -d " " -f 2 <<< "$status")
+    var=$(stat -c%s "$file")
+    mb=$(bc <<< 'scale=0; '$var'/1000000')
+
+    if (($mb > 100))
+    then
+      echo $file >> .gitignore
+    fi
+  done < <( git status --porcelain )
+}
+
+large_files=()
+
 while read status_file; do
-  get_size $status_file
+  print_output $status_file
+  large_files+=( $? )
 done < <( git status --porcelain )
+
+for i in ${large_files[@]};
+do
+   echo $i
+   if (($i == 1))
+   then
+     read -p "Do you want to add your large files to your .gitignore? [Y/N] " answer
+     case $answer in
+        [Yy]* ) add_files; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer Y or N.";;
+    esac
+   fi
+done
