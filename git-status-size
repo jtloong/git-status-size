@@ -45,6 +45,7 @@ function print_output (){
 
 function add_files()
 {
+  echo $(touch .gitignore)
   while read status; do
     file=$(cut -d " " -f 2 <<< "$status")
     var=$(stat -c%s "$file")
