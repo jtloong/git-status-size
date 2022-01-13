@@ -34,7 +34,7 @@ function print_output (){
   esac
 
   test=$(bc <<< 'scale=0; '$var'/1000000')
-  echo $test
+#  echo $test
   if (($test > 100))
   then
     return 1
@@ -67,7 +67,7 @@ done < <( git status --porcelain )
 
 for i in ${large_files[@]};
 do
-   echo $i
+   # echo $i
    if (($i == 1))
    then
      read -p "Do you want to add your large files to your .gitignore? [Y/N] " answer
