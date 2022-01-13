@@ -1,20 +1,12 @@
 #!/bin/bash
 
-function c () {
-    local a
-    (( $# > 0 )) && a="$@" || read -r -p "calc: " a
-    bc -l <<< "$a"
-}
-function round()
-{
-  echo $(printf %.$2f $(echo "scale=$2;(((10^$2)*$1)+0.5)/(10^$2)" | bc))
-};
+
 
 
 function print_output (){
   #Find file size
   var=$(stat -c%s "$2")
-  mb=$(bc <<< 'scale=2; '$var'/1000000')
+  mb=$(awk "BEGIN {printf \"%.1f\",${var}/1000000}")
 
   #Colors
   RED=`tput setaf 1`
@@ -32,9 +24,9 @@ function print_output (){
     R*)   echo "${RED}Renamed${NC}: $2 - $mb mb" ;;
     '??') echo "${RED}Untracked${NC}: $2 - $mb mb" ;;
   esac
-
-  test=$(bc <<< 'scale=0; '$var'/1000000')
-  echo $test
+  #$(awk "BEGIN {printf \"%.1f\",${var}/1000000}")
+  test=$((var/1000000))
+  #echo $test
   if (($test > 100))
   then
     return 1
@@ -49,7 +41,7 @@ function add_files()
   while read status; do
     file=$(cut -d " " -f 2 <<< "$status")
     var=$(stat -c%s "$file")
-    mb=$(bc <<< 'scale=0; '$var'/1000000')
+    mb=$((var/1000000))
 
     if (($mb > 100))
     then
@@ -67,7 +59,7 @@ done < <( git status --porcelain )
 
 for i in ${large_files[@]};
 do
-   echo $i
+   #echo $i
    if (($i == 1))
    then
      read -p "Do you want to add your large files to your .gitignore? [Y/N] " answer
